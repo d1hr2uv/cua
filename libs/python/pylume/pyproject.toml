@@ -9,7 +9,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: MacOS :: MacOS X",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
@@ -20,7 +19,7 @@ keywords = ["apple-silicon", "macos", "virtualization", "vm"]
 license = { text = "MIT" }
 name = "pylume"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 
 [tool.pdm.version]
 path = "pylume/__init__.py"
