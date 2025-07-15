@@ -151,14 +151,9 @@ for cmd in python3.11 python3 python; do
     PYTHON_MAJOR=$(echo $PYTHON_VERSION | cut -d. -f1)
     PYTHON_MINOR=$(echo $PYTHON_VERSION | cut -d. -f2)
     
-    if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -eq 11 ]; then
+    if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 11 ]; then
       PYTHON_CMD=$cmd
       echo "✅ Found suitable Python: $cmd (version $PYTHON_VERSION)"
-      break
-    elif [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -gt 11 ]; then
-      PYTHON_CMD=$cmd
-      PYTHON_TOO_NEW=true
-      echo "⚠️  Found $cmd (version $PYTHON_VERSION) but only Python 3.11.x is supported."
       break
     else
       echo "⚠️  Found $cmd (version $PYTHON_VERSION) but it's too old, trying next..."
@@ -170,25 +165,25 @@ done
 if [ -z "$PYTHON_CMD" ] || [ "$PYTHON_TOO_NEW" = true ]; then
   OS_TYPE=$(uname -s)
   if [ "$PYTHON_TOO_NEW" = true ]; then
-    echo -e "\n❌ Python version $PYTHON_VERSION detected. Only Python 3.11.x is supported. Newer versions (e.g., 3.12+) are not yet supported."
+    echo -e "\n❌ Python version $PYTHON_VERSION detected. Python 3.11+ is required."
   else
     if [[ "$OS_TYPE" == "Darwin" ]]; then
-      echo -e "\n❌ python3.11 not found. To continue, we recommend running this:\n\n    $ brew install python@3.11\n"
+      echo -e "\n❌ python3.11+ not found. To continue, we recommend running this:\n\n    $ brew install python@3.11\n"
     elif [[ "$OS_TYPE" == "MINGW"* || "$OS_TYPE" == "CYGWIN"* || "$OS_TYPE" == "MSYS"* ]]; then
-      echo -e "\n❌ python3.11 not found. Please install Python 3.11 from https://www.python.org/downloads/\n"
+      echo -e "\n❌ python3.11+ not found. Please install Python 3.11+ from https://www.python.org/downloads/\n"
     else
-      echo -e "\n❌ python3.11 not found. Please install Python 3.11 from your package manager or https://www.python.org/downloads/\n"
+      echo -e "\n❌ python3.11+ not found. Please install Python 3.11+ from your package manager or https://www.python.org/downloads/\n"
     fi
   fi
   while true; do
-    echo "Would you like to exit so you can install Python 3.11, or continue anyway? (e = exit, c = continue): "
+    echo "Would you like to exit so you can install Python 3.11+, or continue anyway? (e = exit, c = continue): "
     read -n 1 -r PYTHON_CONT_CHOICE
     echo
     if [[ "$PYTHON_CONT_CHOICE" =~ ^[Ee]$ ]]; then
-      echo "Exiting so you can install Python 3.11."
+      echo "Exiting so you can install Python 3.11+."
       exit 1
     elif [[ "$PYTHON_CONT_CHOICE" =~ ^[Cc]$ ]]; then
-      echo "⚠️  Continuing without Python 3.11. Some features may not work as expected."
+      echo "⚠️  Continuing without Python 3.11+. Some features may not work as expected."
       break
     else
       echo "Please enter 'e' to exit or 'c' to continue."

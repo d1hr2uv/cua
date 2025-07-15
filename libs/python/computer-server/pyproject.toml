@@ -11,7 +11,7 @@ authors = [
 ]
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.111.0",
     "uvicorn[standard]>=0.27.0",
@@ -70,7 +70,7 @@ api = "python -m computer_server"
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py311"
 select = ["E", "F", "B", "I"]
 fix = true
 
@@ -79,7 +79,7 @@ docstring-code-format = true
 
 [tool.mypy]
 strict = true
-python_version = "3.10"
+python_version = "3.11"
 ignore_missing_imports = true
 disallow_untyped_defs = true
 check_untyped_defs = true

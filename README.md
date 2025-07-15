@@ -90,7 +90,7 @@ This repository includes a [Dev Container](./.devcontainer/README.md) configurat
 *Direct Python package installation*
 
 ```bash
-# conda create -yn cua python==3.12
+# conda create -yn cua python==3.11
 
 pip install -U "cua-computer[all]" "cua-agent[all]"
 python -m agent.ui # Start the agent UI

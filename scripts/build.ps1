@@ -56,16 +56,18 @@ try {
 }
 
 # Create or update conda environment
-Print-Step "Creating/updating conda environment 'cua' with Python 3.12..."
+Print-Step "Creating/updating conda environment 'cua' with Python 3.11..."
 try {
     # Check if environment exists
     $envExists = conda env list | Select-String "^cua\s"
     if ($envExists) {
         Print-Step "Environment 'cua' already exists. Updating..."
-        conda env update -n cua -f environment.yml --prune
+        # Note: No environment.yml file exists, so just recreate
+        conda remove -n cua --all -y
+        conda create -n cua python=3.11 -y
     } else {
         Print-Step "Creating new environment 'cua'..."
-        conda create -n cua python=3.12 -y
+        conda create -n cua python=3.11 -y
     }
     Print-Success "Conda environment 'cua' ready"
 } catch {
