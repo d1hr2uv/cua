@@ -49,6 +49,8 @@
 
 # 🚀 Quick Start with a Computer-Use Agent UI
 
+<!-- Verification comment added by Devin for testing purposes -->
+
 **Need to automate desktop tasks? Launch the Computer-Use Agent UI with a single command.**
 
 ### Option 1: Fully-managed install with Docker (recommended)
