@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -53,4 +53,4 @@ RUN rm -rf /app/* /app/.??*
 # via host.docker.internal:7777
 
 # Default command
-CMD ["bash"] 
+CMD ["bash"]  

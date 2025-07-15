@@ -23,9 +23,9 @@ RUN apt-get update && \
     wget \
     unzip \
     git \
-    python3 \
-    python3-pip \
-    python3-numpy \
+    python3.11 \
+    python3.11-pip \
+    python3.11-numpy \
     procps && \
     rm -rf /var/lib/apt/lists/*
 

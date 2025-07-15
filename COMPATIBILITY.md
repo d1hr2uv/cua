@@ -20,7 +20,7 @@
 |-------------------|-------------|------|-------|-------|
 | **playground-docker.sh** | Docker Desktop | ✅ Full | ✅ Full | Recommended for quick setup |
 | **Dev Container** | VS Code/WindSurf + Docker | ✅ Full | ✅ Full | Best for development |
-| **PyPI packages** | Python 3.12+ | ✅ Full | ✅ Full | Most flexible |
+| **PyPI packages** | Python 3.11+ | ✅ Full | ✅ Full | Most flexible |
 
 **macOS Host Requirements:**
 - macOS 15+ (Sequoia) for local VM support
@@ -35,12 +35,12 @@
 |-------------------|-------------|------|-------|-------|
 | **playground-docker.sh** | Docker Engine | ✅ Full | ✅ Full | Recommended for quick setup |
 | **Dev Container** | VS Code/WindSurf + Docker | ✅ Full | ✅ Full | Best for development |
-| **PyPI packages** | Python 3.12+ | ✅ Full | ✅ Full | Most flexible |
+| **PyPI packages** | Python 3.11+ | ✅ Full | ✅ Full | Most flexible |
 
 **Ubuntu/Linux Host Requirements:**
 - Ubuntu 20.04+ or equivalent Linux distribution
 - Docker Engine or Docker Desktop
-- Python 3.12+ for PyPI installation
+- Python 3.11+ for PyPI installation
 
 ---
 
@@ -50,13 +50,13 @@
 |-------------------|-------------|------|------------|-------|-------|
 | **playground-docker.sh** | Docker Desktop + WSL2 | ❌ Not supported | ❌ Not supported | ✅ Full | Requires WSL2 |
 | **Dev Container** | VS Code/WindSurf + Docker + WSL2 | ❌ Not supported | ❌ Not supported | ✅ Full | Requires WSL2 |
-| **PyPI packages** | Python 3.12+ | ❌ Not supported | ✅ Full | ✅ Full |  |
+| **PyPI packages** | Python 3.11+ | ❌ Not supported | ✅ Full | ✅ Full |  |
 
 **Windows Host Requirements:**
 - Windows 10/11 with WSL2 enabled for shell script execution
 - Docker Desktop with WSL2 backend
 - Windows Sandbox feature enabled (for Winsandbox support)
-- Python 3.12+ installed in WSL2 or Windows
+- Python 3.11+ installed in WSL2 or Windows
 - **Note**: Lume CLI is not available on Windows - use Cloud or Winsandbox providers
 
 ---
