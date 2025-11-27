@@ -1,0 +1,18 @@
+{
+  "title": "Home",
+  "description": "Documentation Home",
+  "root": true,
+  "defaultOpen": true,
+  "pages": [
+    "---[Rocket]Get Started---",
+    "...get-started",
+    "---[ChefHat]Cookbook---",
+    "...example-usecases",
+    "---[BookCopy]Computer Playbook---",
+    "...computer-sdk",
+    "---[BookCopy]Agent Playbook---",
+    "...agent-sdk",
+    "---[CodeXml]API Reference---",
+    "...libraries"
+  ]
+}

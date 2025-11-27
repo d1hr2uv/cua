@@ -2,7 +2,7 @@
 
 set -e
 
-echo "🚀 Launching C/ua Computer-Use Agent UI..."
+echo "🚀 Launching Cua Computer-Use Agent UI..."
 
 # Save the original working directory
 ORIGINAL_DIR="$(pwd)"
@@ -22,18 +22,18 @@ TMP_DIR=$(mktemp -d)
 cd "$TMP_DIR"
 trap cleanup EXIT
 
-# Ask user to choose between local macOS VMs or C/ua Cloud Containers
+# Ask user to choose between local macOS VMs or Cua Cloud Sandbox
 echo ""
-echo "Choose your C/ua setup:"
-echo "1) ☁️  C/ua Cloud Containers (works on any system)"
+echo "Choose your Cua setup:"
+echo "1) ☁️  Cua Cloud Sandbox (works on any system)"
 echo "2) 🖥️  Local macOS VMs (requires Apple Silicon Mac + macOS 15+)"
 echo ""
 read -p "Enter your choice (1 or 2): " CHOICE
 
 if [[ "$CHOICE" == "1" ]]; then
-  # C/ua Cloud Container setup
+  # Cua Cloud Sandbox setup
   echo ""
-  echo "☁️ Setting up C/ua Cloud Containers..."
+  echo "☁️ Setting up Cua Cloud Sandbox..."
   echo ""
   
   # Check if existing .env.local already has CUA_API_KEY (check current dir and demo dir)
@@ -61,15 +61,15 @@ if [[ "$CHOICE" == "1" ]]; then
   
   # If no valid API key found, prompt for one
   if [[ -z "$CUA_API_KEY" ]]; then
-    echo "To use C/ua Cloud Containers, you need to:"
-    echo "1. Sign up at https://trycua.com"
-    echo "2. Create a Cloud Container"
+    echo "To use Cua Cloud Sandbox, you need to:"
+    echo "1. Sign up at https://cua.ai"
+    echo "2. Create a Cloud Sandbox"
     echo "3. Generate an Api Key"
     echo ""
-    read -p "Enter your C/ua Api Key: " CUA_API_KEY
+    read -p "Enter your Cua Api Key: " CUA_API_KEY
     
     if [[ -z "$CUA_API_KEY" ]]; then
-      echo "❌ C/ua Api Key is required for Cloud Containers."
+      echo "❌ Cua Api Key is required for Cloud Sandbox."
       exit 1
     fi
   fi
@@ -84,7 +84,7 @@ elif [[ "$CHOICE" == "2" ]]; then
   # Check for Apple Silicon Mac
   if [[ $(uname -s) != "Darwin" || $(uname -m) != "arm64" ]]; then
     echo "❌ Local macOS VMs require an Apple Silicon Mac (M1/M2/M3/M4)."
-    echo "💡 Consider using C/ua Cloud Containers instead (option 1)."
+    echo "💡 Consider using Cua Cloud Sandbox instead (option 1)."
     exit 1
   fi
 
@@ -92,7 +92,7 @@ elif [[ "$CHOICE" == "2" ]]; then
   OSVERSION=$(sw_vers -productVersion)
   if [[ $(echo "$OSVERSION 15.0" | tr " " "\n" | sort -V | head -n 1) != "15.0" ]]; then
     echo "❌ Local macOS VMs require macOS 15 (Sequoia) or newer. You have $OSVERSION."
-    echo "💡 Consider using C/ua Cloud Containers instead (option 1)."
+    echo "💡 Consider using Cua Cloud Sandbox instead (option 1)."
     exit 1
   fi
 
@@ -151,9 +151,14 @@ for cmd in python3.11 python3 python; do
     PYTHON_MAJOR=$(echo $PYTHON_VERSION | cut -d. -f1)
     PYTHON_MINOR=$(echo $PYTHON_VERSION | cut -d. -f2)
     
-    if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 11 ]; then
+    if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -eq 11 ]; then
       PYTHON_CMD=$cmd
       echo "✅ Found suitable Python: $cmd (version $PYTHON_VERSION)"
+      break
+    elif [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -gt 11 ]; then
+      PYTHON_CMD=$cmd
+      PYTHON_TOO_NEW=true
+      echo "⚠️  Found $cmd (version $PYTHON_VERSION) but only Python 3.11.x is supported."
       break
     else
       echo "⚠️  Found $cmd (version $PYTHON_VERSION) but it's too old, trying next..."
@@ -165,25 +170,25 @@ done
 if [ -z "$PYTHON_CMD" ] || [ "$PYTHON_TOO_NEW" = true ]; then
   OS_TYPE=$(uname -s)
   if [ "$PYTHON_TOO_NEW" = true ]; then
-    echo -e "\n❌ Python version $PYTHON_VERSION detected. Python 3.11+ is required."
+    echo -e "\n❌ Python version $PYTHON_VERSION detected. Only Python 3.11.x is supported. Newer versions (e.g., 3.12+) are not yet supported."
   else
     if [[ "$OS_TYPE" == "Darwin" ]]; then
-      echo -e "\n❌ python3.11+ not found. To continue, we recommend running this:\n\n    $ brew install python@3.11\n"
+      echo -e "\n❌ python3.11 not found. To continue, we recommend running this:\n\n    $ brew install python@3.11\n"
     elif [[ "$OS_TYPE" == "MINGW"* || "$OS_TYPE" == "CYGWIN"* || "$OS_TYPE" == "MSYS"* ]]; then
-      echo -e "\n❌ python3.11+ not found. Please install Python 3.11+ from https://www.python.org/downloads/\n"
+      echo -e "\n❌ python3.11 not found. Please install Python 3.11 from https://www.python.org/downloads/\n"
     else
-      echo -e "\n❌ python3.11+ not found. Please install Python 3.11+ from your package manager or https://www.python.org/downloads/\n"
+      echo -e "\n❌ python3.11 not found. Please install Python 3.11 from your package manager or https://www.python.org/downloads/\n"
     fi
   fi
   while true; do
-    echo "Would you like to exit so you can install Python 3.11+, or continue anyway? (e = exit, c = continue): "
+    echo "Would you like to exit so you can install Python 3.11, or continue anyway? (e = exit, c = continue): "
     read -n 1 -r PYTHON_CONT_CHOICE
     echo
     if [[ "$PYTHON_CONT_CHOICE" =~ ^[Ee]$ ]]; then
-      echo "Exiting so you can install Python 3.11+."
+      echo "Exiting so you can install Python 3.11."
       exit 1
     elif [[ "$PYTHON_CONT_CHOICE" =~ ^[Cc]$ ]]; then
-      echo "⚠️  Continuing without Python 3.11+. Some features may not work as expected."
+      echo "⚠️  Continuing without Python 3.11. Some features may not work as expected."
       break
     else
       echo "Please enter 'e' to exit or 'c' to continue."
@@ -200,7 +205,7 @@ fi
 source "$VENV_DIR/bin/activate"
 
 # Install required packages
-echo "📦 Updating C/ua packages..."
+echo "📦 Updating Cua packages..."
 pip install -U pip setuptools wheel Cmake
 pip install -U cua-computer "cua-agent[all]"
 
@@ -244,7 +249,7 @@ chmod +x "$DEMO_DIR/start_ui.sh"
 echo "✅ Setup complete!"
 
 if [[ "$USE_CLOUD" == "true" ]]; then
-  # Create run_demo.py for cloud containers
+  # Create run_demo.py for cloud sandbox
   cat > "$DEMO_DIR/run_demo.py" << 'EOF'
 import asyncio
 import os
@@ -252,7 +257,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from computer import Computer
 from agent import ComputerAgent, LLM, AgentLoop, LLMProvider
-from agent.ui.gradio.app import create_gradio_ui
+from agent.ui.gradio.ui_components import create_gradio_ui
 
 # Load environment variables from .env.local
 load_dotenv(Path(__file__).parent / ".env.local")
@@ -271,7 +276,7 @@ if not openai_key and not anthropic_key:
     print("\n⚠️  No OpenAI or Anthropic API keys found in .env.local.")
     print("Please add at least one API key to use AI agents.")
 
-print("🚀 Starting CUA playground with Cloud Containers...")
+print("🚀 Starting CUA playground with Cloud Sandbox...")
 print("📝 Edit .env.local to update your API keys")
 
 # Launch the Gradio UI and open it in the browser
@@ -287,7 +292,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from computer import Computer
 from agent import ComputerAgent, LLM, AgentLoop, LLMProvider
-from agent.ui.gradio.app import create_gradio_ui
+from agent.ui.gradio.ui_components import create_gradio_ui
 
 # Load environment variables from .env.local
 load_dotenv(Path(__file__).parent / ".env.local")
@@ -309,7 +314,7 @@ app.launch(share=False, inbrowser=True)
 EOF
 fi
 
-echo "☁️  CUA Cloud Container setup complete!"
+echo "☁️  CUA Cloud Sandbox setup complete!"
 echo "📝 Edit $DEMO_DIR/.env.local to update your API keys"
 echo "🖥️  Start the playground by running: $DEMO_DIR/start_ui.sh"
 
@@ -331,10 +336,10 @@ fi
 
 # Ask if the user wants to start the demo now
 echo
-read -p "Would you like to start the C/ua Computer-Use Agent UI now? (y/n) " -n 1 -r
+read -p "Would you like to start the Cua Computer-Use Agent UI now? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo "🚀 Starting the C/ua Computer-Use Agent UI..."
+  echo "🚀 Starting the Cua Computer-Use Agent UI..."
   echo ""
   "$DEMO_DIR/start_ui.sh"
 fi

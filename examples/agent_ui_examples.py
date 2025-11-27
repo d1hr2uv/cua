@@ -13,7 +13,7 @@ from utils import load_dotenv_files
 load_dotenv_files()
 
 # Import the create_gradio_ui function
-from agent.ui.gradio.app import create_gradio_ui
+from agent.ui.gradio.ui_components import create_gradio_ui
 
 if __name__ == "__main__":
     print("Launching Computer-Use Agent Gradio UI with advanced features...")

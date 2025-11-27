@@ -12,7 +12,6 @@ logger = logging.getLogger("computer")
 try:
     # Import from core telemetry
     from core.telemetry import (
-        flush,
         is_telemetry_enabled,
         record_event,
     )
@@ -30,9 +29,6 @@ try:
                 "python_version": sys.version,
             },
         )
-
-        # Flush events to ensure they're sent
-        flush()
     else:
         logger.info("Telemetry is disabled")
 except ImportError as e:
